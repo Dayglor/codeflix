@@ -1,0 +1,23 @@
+{
+  "name": "codeflix-fullcycle",
+  "version": "1.0.0",
+  "description": "project codeflix of the fullcycle course - ADMIN CATALOGO",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "ts-node": "ts-node",
+    "tsc": "tsc"
+  },
+  "keywords": [
+    "codeflix",
+    "fullcycle",
+    "course"
+  ],
+  "author": "Dayglor",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  }
+}
