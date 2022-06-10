@@ -14,14 +14,13 @@ export default abstract class Entity<T> {
     private _createdAt: Date;
     private _updatedAt: Date;
     private _removedAt: Date | null;
-    // private props: any
 
-    constructor(private readonly _props: any, private _identificationGenerator?: IdentificationGeneratorInterface) {
+    constructor(protected readonly props: any, private _identificationGenerator?: IdentificationGeneratorInterface) {
         const identificationGenerator = _identificationGenerator || new Uuid();
-        this._id = _props.id || identificationGenerator.generateId();
-        this._createdAt = _props.createdAt || new Date();
-        this._updatedAt = _props.updatedAt || new Date();
-        this._removedAt = _props.removedAt || null;
+        this._id = props.id || identificationGenerator.generateId();
+        this._createdAt = props.createdAt || new Date();
+        this._updatedAt = props.updatedAt || new Date();
+        this._removedAt = props.removedAt || null;
     }
 
     get id() : string {
@@ -44,13 +43,12 @@ export default abstract class Entity<T> {
         this._removedAt =  date || new Date();
     }
 
-    public toJSON(): T {
+    public toJSON(): any{
         return {
             id: this.id,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
             removedAt: this.removedAt,
-            ...this.props
         };
     }
 }

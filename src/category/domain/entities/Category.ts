@@ -1,6 +1,7 @@
+import IdentificationGeneratorInterface from "@seedwork/domain/identificationGenerator/identificationGeneratorInterface";
 import Entity from "../../../@seedwork/domain/entiites/Entity";
 import InvalidIdError from "../../../@seedwork/errors/invalid-id-error";
-import IdentificationGeneratorInterface from "../../../@seedwork/identificationGenerator/identificationGeneratorInterface";
+// import IdentificationGeneratorInterface from "../../../@seedwork/identificationGenerator/identificationGeneratorInterface";
 
 
 
@@ -25,14 +26,18 @@ export type CategoryPropsOutput = {
 
 export class Category extends Entity<Category> {
     // private description: string
-    constructor(private props: CategoryProps, private identificationGenerator?: IdentificationGeneratorInterface) {
+    private _name: string;
+    private _description: string;
+    private _isActive: boolean;
+
+    constructor(props: CategoryProps, private readonly identificationGenerator?: IdentificationGeneratorInterface) {
         super(props, identificationGenerator);
         // this.id = props.id || identificationGenerator.generateId();
-        this.name = props.name;
-        this.description = props.description || '';
+        this._name = props.name;
+        this._description = typeof props.description !== 'string' ? '' : props.description;
         // this.createdAt = this.props.createdAt || new Date();
         // this.updatedAt = this.props.updatedAt || new Date();
-        this.isActive = this.props.isActive || false;
+        this._isActive = this.props.isActive || false;
 
         this.validate()
     }
@@ -43,6 +48,18 @@ export class Category extends Entity<Category> {
         }
     }
 
+
+    toJSON() {
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
+            isActive: this.isActive,
+            removedAt: this.removedAt,
+        }
+    }
 
     // public toJSON(): CategoryPropsOutput {
     //     // console.log(this)
@@ -61,20 +78,24 @@ export class Category extends Entity<Category> {
     // }
 
     public get description(): string {
-        return this.props.description;
+        return typeof this._description !== 'string' ? '' : this._description;
     }
 
     get isActive(): boolean | undefined {
-        return this.props.isActive;
+        return this._isActive;
     }
 
     get name(): string {
-        return this.props.name;
+        return this._name;
     }
 
     set name(value: string) {
-        this.props.name = value;
+        this._name = value;
     }
+
+    // changeName(value:string) {
+    //     this._name = value;
+    // }
 
 
 
@@ -87,7 +108,7 @@ export class Category extends Entity<Category> {
     // }
 
     private set isActive(value: boolean) {
-        this.props.isActive = value;
+        this._isActive = value;
     }
 
     // private set updatedAt(date: Date) {
@@ -99,7 +120,7 @@ export class Category extends Entity<Category> {
     // }
 
     private set description (value:string) {
-        this.props.description = value;
+        this._description = value;
     }
 
     // private set id (value: string) {

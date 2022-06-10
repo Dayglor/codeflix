@@ -7,7 +7,7 @@ import { Category } from "./Category";
 
 describe('Category', () => {
   it('should be defined', () => {
-    expect(new Category({}, new Md5())).toBeDefined();
+    expect(new Category({name:null}, new Md5())).toBeDefined();
   });
 
   it('should have a name and category', () => {
@@ -114,7 +114,8 @@ describe('Category', () => {
   it("should be convert to json", () => {
     const category = new Category({
       name: 'category name',
-      isActive: true
+      isActive: true,
+      description: 'category description'
     }, new Uuid());
 
     const CategoryPropsOutput = category.toJSON();
@@ -129,7 +130,7 @@ describe('Category', () => {
     expect(CategoryPropsOutput.removedAt).toBe(category.removedAt);
   })
 
-  it('should be change name and conver to json with new name', () => {
+  it('should be change name and conver to json with new name', async () => {
     const category = new Category({
       name: 'category name',
       isActive: true
