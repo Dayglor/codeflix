@@ -49,7 +49,7 @@ export class Category extends Entity<Category> {
     }
 
 
-    toJSON() {
+    toJSON(): CategoryPropsOutput {
         return {
             id: this.id,
             name: this.name,
